@@ -1,7 +1,7 @@
 // U51313007
 
 // Load and parse CSV data
-d3.csv("mock_stock_data.csv").then(data => {
+d3.csv("data/mock_stock_data.csv").then(data => {
     const parsedData = data.map(d => ({
       date: d3.timeParse("%Y-%m-%d")(d.Date),
       stock: d.Stock,
