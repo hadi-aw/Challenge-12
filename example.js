@@ -7,7 +7,7 @@ d3.csv("data/mock_stock_data.csv").then(data => {
       stock: d.Stock,
       price: +d.Price
     }));
-  
+    console.log(parsedData);
     // Function to filter by stock name
     function filterByStockName(data, stockName) {
       return data.filter(d => d.stock === stockName);
