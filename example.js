@@ -72,18 +72,19 @@ d3.csv("data/mock_stock_data.csv").then(data => {
     .attr("r", 5)
     .attr("cx", d => xScale(d.date))
     .attr("cy", d => yScale(d.price))
-    .on("mouseover", d => {
+    .on("mouseover", (event, d) => {
+        const [x, y] = d3.pointer(event); // Use event directly without svg.node()
         tooltip.transition()
-        .duration(200)
-        .style("opacity", .9);
+            .duration(200)
+            .style("opacity", .9);
         tooltip.html(`${d.stock}: $${d.price} on ${d3.timeFormat("%B %d, %Y")(d.date)}`)
-        .style("left", (d3.event.pageX) + "px")
-        .style("top", (d3.event.pageY - 28) + "px");
+            .style("left", `${x + 10}px`) // Adjust based on the pointer's position directly
+            .style("top", `${y + 10}px`);
     })
-    .on("mouseout", d => {
-      tooltip.transition()
-        .duration(500)
-        .style("opacity", 0);
+    .on("mouseout", () => {
+        tooltip.transition()
+            .duration(500)
+            .style("opacity", 0);
     });
 
     // Expose the filtering functions for later use
