@@ -67,4 +67,30 @@ d3.csv("mock_stock_data.csv").then(data => {
     .attr("stroke-width", 1.5)
     .attr("d", line);
 
+
+// Tooltip setup
+    const tooltip = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
+    svg.selectAll("dot")
+    .data(window.parsedData)
+    .enter().append("circle")
+    .attr("r", 5)
+    .attr("cx", d => xScale(d.date))
+    .attr("cy", d => yScale(d.price))
+    .on("mouseover", d => {
+    tooltip.transition()
+    .duration(200)
+    .style("opacity", .9);
+    tooltip.html(`${d.stock}: $${d.price} on ${d3.timeFormat("%B %d, %Y")(d.date)}`)
+    .style("left", (d3.event.pageX) + "px")
+    .style("top", (d3.event.pageY - 28) + "px");
+})
+.on("mouseout", d => {
+  tooltip.transition()
+    .duration(500)
+    .style("opacity", 0);
+});
+
     });
